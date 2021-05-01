@@ -11,13 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Datos del Covid
 
-Los datos del covid son administrados por la universidad Johns Hopkins [https://www.arcgis.com/apps/opsdashboard/index.html\#/bda7594740fd4029](https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6){.uri} la cual se encarga de hacer seguiento y actualización de los reportes diarios de las paises reportantes. El principal medio de consulta de datos es un dashboard que prociona una lectura de las series de **muertes, total de contagios y recuperados por país**. Aún así, en ocaciones es importante poder trabajar los datos directamente por lo investigadores, así que aquí comparto un corto instructivo para descargar los datos a R en tiempo real, sacando el mayor provecho de una base que es alimentada diariamente, además comento algunas posibles aplicaciones a estos datos.
+Los datos del covid son administrados por la universidad Johns Hopkins [https://www.arcgis.com/apps/opsdashboard/index.html\#/bda7594740fd4029](https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6){.uri} la cual se encarga de hacer seguiento y actualización de los reportes diarios de las paises reportantes. El principal medio de consulta de datos es un dashboard que prociona una lectura de las series de **muertes, total de contagios y recuperados por país**. Aún así, en ocasiones es importante trabajar los datos directamente por lo investigadores. Así que, comparto un corto instructivo para descargar los datos a R en tiempo real, sacando el mayor provecho de una base que es alimentada diariamente, además comento algunas posibles aplicaciones a estos datos.
 
 ## Descarga de datos desde Github
 
-Los datos que alimentan el dashboard de Jonh Hopkins son almacenados en la cuenta oficial de la universidad en la plataforma Github en el usuario [CSSEGISandData](https://github.com/CSSEGISandData/COVID-19){.uri}, allí se pueden encontrar datos de corte transversal diarios de paises , regiones y/o departamentos, así como los datos de series de tiempo a nivel pais desde el 22 de enero del 2020. En el caso de Estados Unidos se puende encontrar información más detallada como el número de vacunados, entre otras variables.
+Los datos que alimentan el dashboard de Jonh Hopkins son almacenados en la cuenta oficial de la universidad en la plataforma Github en el usuario [CSSEGISandData](https://github.com/CSSEGISandData/COVID-19){.uri}, allí se pueden encontrar datos de corte transversal diarios de paises, regiones y/o departamentos, así como los datos de series de tiempo a nivel pais desde el 22 de enero del 2020. En el caso de Estados Unidos se puede encontrar información más detallada como el número de vacunados, entre otras variables.
 
-En este caso, para este ejemplo importaré los datos de series de tiempo a nivel mundial de **casos confirmados, muertes y recuperados**. Para importar los datos se debe tomar la URL de los datos en crudo "raw data" tal como es mostrado a continuación:
+Para este caso, para este ejemplo importaré los datos de series de tiempo a nivel mundial de **casos confirmados, muertes y recuperados**. Para importar los datos se debe tomar la URL de los datos en crudo "raw data" tal como es mostrado a continuación:
 
 ```{r }
 urlfile.death<-'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
@@ -48,7 +48,7 @@ confirmados.col=confirmados.total[Country.Region=="Colombia",]
 
 ```
 
-La columna *Country.Region* contiene los nombre de los paises, para este caso se hace el filtro para Colombia, pero podrá ser modificado por cualquier otro país de la base de datos. Ahora, debemos modificar la base de datos de horizontal a vertical y eliminar las filas que corresponden a caracteres así como , eliminar los valores correspondientes a longitud y latitud.
+La columna *Country.Region* contiene los nombres de los paises, para este caso se hace el filtro para Colombia, pero podrá ser modificado por cualquier otro país de la base de datos. Ahora, debemos modificar la base de datos de horizontal a vertical y eliminar las filas que corresponden a caracteres así como, eliminar los valores correspondientes a longitud y latitud.
 
 ```{r }
 confi.col=data.frame(t(confirmados.col)[-c(1:4)])
