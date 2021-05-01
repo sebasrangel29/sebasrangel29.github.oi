@@ -11,13 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Datos del Covid
 
-Los datos del covid son administrados por la universidad Johns Hopkins <https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6> la cual se encarga de hacer seguiento y actualización de los reportes diarios de las paises reportantes. El principal medio de consulta de datos es un dashboard que prociona una lectura de las series de muertes, total de contagios y recuperados por país. Aún así muchas veces es importante poder trabajar los datos directamente por lo investigadores, así que aquí comparto un corto instructivo para descargar los datos a R en tiempo real pues esta base es actualizada diariamente, además comento algunas posibles aplicaciones a estos datos.
+Los datos del covid son administrados por la universidad Johns Hopkins <https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6> la cual se encarga de hacer seguiento y actualización de los reportes diarios de las paises reportantes. El principal medio de consulta de datos es un dashboard que prociona una lectura de las series de **muertes, total de contagios y recuperados por país**. Aún así, en ocaciones es importante poder trabajar los datos directamente por lo investigadores, así que aquí comparto un corto instructivo para descargar los datos a R en tiempo real, sacando el mayor provecho de una base que es alimentada diariamente, además comento algunas posibles aplicaciones a estos datos.
 
 ## Descarga de datos desde Github
 
-Los datos que alimentan el dashboard son almacenados en la cuenta oficial de la universidad Johns Hopkins en la plataforma Github <https://github.com/CSSEGISandData/COVID-19> , allí se pueden encontrar datos de corte trasversal diarios de paises y regiones o departamentos, así como los datos de series de tiempo a nivel pais. En el caso de Estados Unidos puenden encontrar información más detallada como el número de vacunados, entre otras variables.
+Los datos que alimentan el dashboard de Jonh Hopkins son almacenados en la cuenta oficial de la universidad en la plataforma Github en el usuario [CSSEGISandData](https://github.com/CSSEGISandData/COVID-19){.uri}, allí se pueden encontrar datos de corte transversal diarios de paises , regiones y/o departamentos, así como los datos de series de tiempo a nivel pais desde el 22 de enero del 2020. En el caso de Estados Unidos se puende encontrar información más detallada como el número de vacunados, entre otras variables.
 
-En este caso deseo importar los datos de series de tiempo a nivel mundial de *casos confirmados*, *muertes* y *recuperados*. Para importar los datos se debe tomar la URL de los datos en crudo "raw data" tal como es mostrado a continuación:
+En este caso, para este ejemplo importaré los datos de series de tiempo a nivel mundial de **casos confirmados, muertes y recuperados**. Para importar los datos se debe tomar la URL de los datos en crudo "raw data" tal como es mostrado a continuación:
 
 ```{r }
 urlfile.death<-'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
@@ -31,7 +31,7 @@ recuperados.total<-read.csv(urlfile.recove)
 
 ```
 
-Lo anterior crea tres data.frames "recuperados.total", "confirmados.total" y "muertes.total".
+Lo anterior crea tres data.frames "recuperados.total", "confirmados.total" y "muertes.total", de forma similar se pueden decargar otros archivos, basta con conocer el nombre de la tabla de datos.
 
 ## Preprocesamiento de datos
 
@@ -47,7 +47,8 @@ attach(confirmados.total)
 confirmados.col=confirmados.total[Country.Region=="Colombia",]
 
 ```
-La columna *Country.Region* contiene los nombre de los paises, para este caso se hace el filtro para Colombia, pero podrá ser modificado por cualquier otro país de la base de datos. Ahora, debemos modificar la base de datos de horizontal a vertical y eliminar las filas los voles correspondientes a longitud y latitu.
+
+La columna *Country.Region* contiene los nombre de los paises, para este caso se hace el filtro para Colombia, pero podrá ser modificado por cualquier otro país de la base de datos. Ahora, debemos modificar la base de datos de horizontal a vertical y eliminar las filas que corresponden a caracteres así como , eliminar los valores correspondientes a longitud y latitud.
 
 ```{r }
 confi.col=data.frame(t(confirmados.col)[-c(1:4)])
@@ -56,7 +57,7 @@ attach(confi.col)
 confi.col.ts=ts(as.numeric(Col.confirmados),start=c(2020,1,22) , freq=365 )
 ```
 
-Ahora tenemos nuestra serie de tiempo del acumulado de contagiados diario y puede ser graficado así.
+Ahora tenemos nuestra serie de tiempo del acumulado de contagiados diarios que podría ser graficado de la siguiente forma.
 
 ```{r , echo=FALSE}
 library(ggfortify)
@@ -71,11 +72,13 @@ contagio.diario=diff(confi.col.ts)
 autoplot(contagio.diario,ts.colour = "blue", ts.linetype = "solid", main="Contagios por dias en Colombia" )
 ```
 
-La gráfica anterior puede ser sujeta de estidio de los modelo clásicos de series temporales.
+La gráfica anterior puede ser sujeta a estudios de los modelo clásicos de series temporales univariadas.
 
 ## Distribución espacial de los datos
 
-Esta base de datos provee información de latitud y longitud lo que permite hacer georeferenciación de las variables. Para ello es necesario hacer un ordenamiento de los datos para facilitar el análisis del número de casos confirmados acumulado del día que es decargada la base, para este caso \today.
+Esta base de datos provee información de latitud y longitud, lo que permite hacer georeferenciación de las variables. Para ello es necesario hacer un ordenamiento de los datos para facilitar el análisis del número de casos confirmados acumulado del día que es decargada la base, para este caso
+
+    "`r Sys.Date()`"
 
 ```{r}
 mundi=confirmados.total[c(2,3,4,ncol(confirmados.total))]
@@ -84,7 +87,7 @@ mundi$X4.29.21=as.numeric(mundi[,4])
 
 Una vez configurada la nueva base procedemos a instalar los paquetes correspondientes y a importar una malla geopolitica mundial. En el siguiente link se puede profundizar un poco sobre ello <https://rpubs.com/rubenfbc/mapa_coordenadas>
 
-Para final podemos ubicar en un mapa mundo puntos que según su tamaño representa el número de contagios acumulado a corte de descarga de los datos.
+Para final, podemos ubicar en un mapa mundo puntos según el total de contagiados acumulados a la fecha de corte que el código es ejecutado.
 
 ```{r pressure load-packages}
 library(dplyr )
@@ -110,4 +113,4 @@ mapa_mundo %>%
   theme_map()
 ```
 
-Este mapa va a variar si el código es ejecutado en distintos perios de tiempo.
+Este mapa va a variar si el código es ejecutado en distintos perios de tiempo y puede servir de insumo importante. El mismo ejercicio se puede hacer a nivel país por región. Les comparto este mismo documento en formato html para facilitar la lectura de los código. \<<https://sebasrangel29.github.io/sebasrangel29.github.oi/covid2.html>\>

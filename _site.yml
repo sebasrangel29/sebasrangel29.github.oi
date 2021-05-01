@@ -1,7 +1,7 @@
 name: "my-website"
 output_dir: "."
 navbar:
-  title: "Econometría "
+  title: "Tips para Econometristas"
   left:
     - text: "Datos Covid"
       href: covid2.html
