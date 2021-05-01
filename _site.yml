@@ -1,0 +1,9 @@
+name: "my-website"
+output_dir: "."
+navbar:
+  title: "Econometría "
+  left:
+    - text: "Datos Covid"
+      href: covid2.html
+    - text: "Coming soon"
+      href: about.html
