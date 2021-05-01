@@ -5,5 +5,8 @@ navbar:
   left:
     - text: "Datos Covid"
       href: covid2.html
-    - text: "Coming soon"
-      href: about.html
+      
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
