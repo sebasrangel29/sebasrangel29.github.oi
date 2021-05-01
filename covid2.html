@@ -17,7 +17,7 @@
 <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -266,7 +266,7 @@ $(document).ready(function () {
 
 <div id="datos-del-covid" class="section level1">
 <h1>Datos del Covid</h1>
-<p>Los datos del covid son administrados por la universidad Johns Hopkins <a href="https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6" class="uri">https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd4029</a> la cual se encarga de hacer seguiento y actualización de los reportes diarios de las paises reportantes. El principal medio de consulta de datos es un dashboard que prociona una lectura de las series de <strong>muertes, total de contagios y recuperados por país</strong>. Aún así, en ocasiones es importante trabajar los datos directamente por lo investigadores. Así que, comparto un corto instructivo para descargar los datos a R en tiempo real, sacando el mayor provecho de una base que es alimentada diariamente, además comento algunas posibles aplicaciones a estos datos.</p>
+<p>Los datos del covid son administrados por la universidad Johns Hopkins <a href="https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6" class="uri">https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd4029</a> la cual se encarga de hacer seguimiento y actualización de los reportes diarios de las paises reportantes. El principal medio de consulta de datos es un dashboard que prociona una lectura de las series de <strong>muertes, total de contagios y recuperados por país</strong>. Aún así, en ocasiones es importante trabajar los datos directamente por lo investigadores. Así que, comparto un corto instructivo para descargar los datos a R en tiempo real, sacando el mayor provecho de una base que es alimentada diariamente, además comento algunas posibles aplicaciones a estos datos.</p>
 <div id="descarga-de-datos-desde-github" class="section level2">
 <h2>Descarga de datos desde Github</h2>
 <p>Los datos que alimentan el dashboard de Jonh Hopkins son almacenados en la cuenta oficial de la universidad en la plataforma Github en el usuario <a href="https://github.com/CSSEGISandData/COVID-19" class="uri">CSSEGISandData</a>, allí se pueden encontrar datos de corte transversal diarios de paises, regiones y/o departamentos, así como los datos de series de tiempo a nivel pais desde el 22 de enero del 2020. En el caso de Estados Unidos se puede encontrar información más detallada como el número de vacunados, entre otras variables.</p>
