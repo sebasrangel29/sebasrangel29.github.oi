@@ -4,8 +4,7 @@ navbar:
   title: "Tips para Econometristas"
   left:
     - text: "Datos Covid"
-      href: covid2.html
-      
+      href: covid2.html     
 output:
   html_document:
     theme: united
