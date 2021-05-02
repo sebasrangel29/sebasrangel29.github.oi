@@ -270,7 +270,7 @@ $(document).ready(function () {
 <div id="descarga-de-datos-desde-github" class="section level2">
 <h2>Descarga de datos desde Github</h2>
 <p>Los datos que alimentan el dashboard de Jonh Hopkins son almacenados en la cuenta oficial de la universidad en la plataforma Github en el usuario <a href="https://github.com/CSSEGISandData/COVID-19" class="uri">CSSEGISandData</a>, allí se pueden encontrar datos de corte transversal diarios de paises, regiones y/o departamentos, así como los datos de series de tiempo a nivel pais desde el 22 de enero del 2020. En el caso de Estados Unidos se puede encontrar información más detallada como el número de vacunados, entre otras variables.</p>
-<p>Para este caso, para este ejemplo importaré los datos de series de tiempo a nivel mundial de <strong>casos confirmados, muertes y recuperados</strong>. Para importar los datos se debe tomar la URL de los datos en crudo “raw data” tal como es mostrado a continuación:</p>
+<p>Para este caso importaré los datos de series de tiempo a nivel mundial de <strong>casos confirmados, muertes y recuperados</strong>. Para importar los datos se debe tomar la URL de los datos en crudo “raw data” tal como es mostrado a continuación:</p>
 <pre class="r"><code>urlfile.death&lt;-&#39;https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv&#39;
 muertes.total&lt;-read.csv(urlfile.death)
 
@@ -304,7 +304,7 @@ confi.col.ts=ts(as.numeric(Col.confirmados),start=c(2020,1,22) , freq=365 )</cod
 <pre class="r"><code>mundi=confirmados.total[c(2,3,4,ncol(confirmados.total))]
 mundi$X4.29.21=as.numeric(mundi[,4])</code></pre>
 <p>Una vez configurada la nueva base procedemos a instalar los paquetes correspondientes y a importar una malla geopolitica mundial. En el siguiente link se puede profundizar un poco sobre ello <a href="https://rpubs.com/rubenfbc/mapa_coordenadas" class="uri">https://rpubs.com/rubenfbc/mapa_coordenadas</a></p>
-<p>Para final, podemos ubicar en un mapa mundo puntos según el total de contagiados acumulados a la fecha de corte que el código es ejecutado.</p>
+<p>Para finalizar, podemos ubicar en un mapa mundo puntos según el total de contagiados acumulados a la fecha de corte que el código es ejecutado.</p>
 <pre class="r"><code>library(dplyr )</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;dplyr&#39;</code></pre>
